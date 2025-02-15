@@ -1,33 +1,24 @@
 steps:
-  # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build', 
-      '-t', 'us-central1-docker.pkg.dev/semester-2-408906/demo-0000000000/assignment2:${SHORT_SHA}', 
-      '.'
-    ]
-    
-  # Docker Push
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'push', 
-      'us-central1-docker.pkg.dev/semester-2-408906/demo-0000000000/assignment2:${SHORT_SHA}'
-    ]
-  
-  # Deploy to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args:
-      - 'run'
-      - 'deploy'
-      - 'assignment2'  # Cloud Run service name
-      - '--image'
-      - 'us-central1-docker.pkg.dev/semester-2-408906/demo-0000000000/assignment2:${SHORT_SHA}'
-      - '--region'
-      - 'us-central1'  # Region for Cloud Run
+  # Step 1: Install Node.js dependencies
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
 
-images:
-  - 'us-central1-docker.pkg.dev/semester-2-408906/demo-0000000000/assignment2:${SHORT_SHA}'
+  # Step 2: Run Unit Tests (if applicable)
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['test']
 
-options:
-  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+  # Step 3: Lint the JavaScript Code (optional but recommended)
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'lint']
+
+  # Step 4: Build the Application (e.g., for React/Angular, or minify for static apps)
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build']
+
+  # Step 5: Build the Docker Image (Optional, if using Docker for deployment)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/cloud-infrastructure-448600/anish-100890955/app:$COMMIT_SHA', '.']
+
+  # Step 6: Push the Docker Image to Google Container Registry (Optional, if using Docker)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/cloud-infrastructure-448600/anish-100890955/app:$COMMIT_SHA']
