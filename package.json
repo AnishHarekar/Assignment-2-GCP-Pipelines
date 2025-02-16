@@ -6,8 +6,8 @@
   "scripts": {
     "prettify": "prettier -l --write \"**/*.js\"",
     "test": "jest",
-    "dev": "nodemon --inspect=0.0.0.0:9229 -L index.js",  // Updated to refer to the root index.js file
-    "start": "node index.js"  // Ensure this starts index.js in the root
+    "dev": "nodemon --inspect=0.0.0.0:9229 -L index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.18.2",
