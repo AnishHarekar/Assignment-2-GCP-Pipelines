@@ -10,12 +10,11 @@ COPY package*.json ./
 # Step 4: Install dependencies
 RUN npm install
 
-# Step 5: Copy the rest of the app's files into the container
-COPY . .
+# Step 5: Copy the entire project into the container (this includes index.js)
+COPY . .  # This ensures all files, including index.js, are copied
 
 # Step 6: Expose port 8080 (Cloud Run default port)
 EXPOSE 8080
 
 # Step 7: Command to run the app when the container starts
-# Ensure the app listens on the correct port (process.env.PORT or default to 8080)
 CMD ["npm", "start"]
