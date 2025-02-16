@@ -21,7 +21,7 @@ steps:
       'us-central1-docker.pkg.dev/cloud-infrastructure-448600/anish-100890955/assignment2:${SHORT_SHA}'
     ]
   
-  # Step 4: Deploy to Cloud Run
+  # Step 4: Deploy to Cloud Run using gcloud CLI
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
