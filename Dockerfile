@@ -11,7 +11,8 @@ COPY package*.json ./
 RUN npm install
 
 # Step 5: Copy everything from your local directory into the /app directory in the container
-COPY . .  # This will copy all files from the root directory, including the src folder, into /app
+COPY ./src /app/src
+COPY ./src/index.js /app/index.js
 
 # Step 6: Expose port 8080 (Cloud Run default port)
 EXPOSE 8080
