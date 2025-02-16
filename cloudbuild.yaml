@@ -1,5 +1,12 @@
 steps:
-  # Docker Build
+  # Step 1: Install dependencies and run tests
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['test']  # Run your tests using npm (make sure you have a test script defined in package.json)
+
+  # Step 2: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build', 
@@ -7,14 +14,14 @@ steps:
       '.'
     ]
     
-  # Docker Push
+  # Step 3: Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push', 
       'us-central1-docker.pkg.dev/cloud-infrastructure-448600/anish-100890955/assignment2:${SHORT_SHA}'
     ]
   
-  # Deploy to Cloud Run
+  # Step 4: Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
