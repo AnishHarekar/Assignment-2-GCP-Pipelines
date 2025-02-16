@@ -19,7 +19,8 @@ app.delete('/items/:id', deleteItem);
 const port = process.env.PORT || 8080;
 
 db.init().then(() => {
-    app.listen(port, () => console.log(`Listening on port 8080`)); // Start listening on the dynamic port
+    // Use the dynamic port value for the log
+    app.listen(port, () => console.log(`App listening on port ${port}`)); // Start listening on the dynamic port
 }).catch((err) => {
     console.error(err);
     process.exit(1);
@@ -35,3 +36,4 @@ const gracefulShutdown = () => {
 process.on('SIGINT', gracefulShutdown);
 process.on('SIGTERM', gracefulShutdown);
 process.on('SIGUSR2', gracefulShutdown); // Sent by nodemon
+
