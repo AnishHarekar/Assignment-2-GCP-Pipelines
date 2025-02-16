@@ -5,5 +5,10 @@
 **/npm-debug.log
 **/build
 **/dist
+# Exclude documentation files
 LICENSE
 README.md
+
+# Do NOT exclude the src directory and index.js (add "!" to make sure these files are included)
+!src/
+!index.js
