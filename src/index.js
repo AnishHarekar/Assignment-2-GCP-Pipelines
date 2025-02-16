@@ -9,18 +9,23 @@ const deleteItem = require('./routes/deleteItem');
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
 
+// Define routes
 app.get('/items', getItems);
 app.post('/items', addItem);
 app.put('/items/:id', updateItem);
 app.delete('/items/:id', deleteItem);
 
+// Get the port from environment variables, defaulting to 8080
+const port = process.env.PORT || 8080;
+
 db.init().then(() => {
-    app.listen(3000, () => console.log('Listening on port 3000'));
+    app.listen(port, () => console.log(`Listening on port 8080`)); // Start listening on the dynamic port
 }).catch((err) => {
     console.error(err);
     process.exit(1);
 });
 
+// Graceful shutdown
 const gracefulShutdown = () => {
     db.teardown()
         .catch(() => {})
